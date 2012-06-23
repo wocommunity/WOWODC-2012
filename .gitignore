@@ -1,0 +1,11 @@
+target
+bin
+*.xcodeproj
+*.pbxproj
+ant.*
+.DS_Store
+*.o
+*.lo
+*.slo
+*.la
+*.so
