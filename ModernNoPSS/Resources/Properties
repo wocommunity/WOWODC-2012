@@ -67,7 +67,7 @@ log4j.logger.er=INFO
 
 # ERExtensions
 # Transaction - Switching this to debug will start the sql ouputting.
-log4j.logger.er.transaction.adaptor.EOAdaptorDebugEnabled=DEBUG
+log4j.logger.er.transaction.adaptor.EOAdaptorDebugEnabled=INFO
 
 # Fixes - Turning this on will show all the models that are loaded
 log4j.logger.er.extensions.fixes.ERSharedEOLoader=INFO
