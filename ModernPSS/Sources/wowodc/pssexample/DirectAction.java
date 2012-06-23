@@ -1,12 +1,13 @@
 package wowodc.pssexample;
 
+import wowodc.pssexample.components.Main;
+
 import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WORequest;
 import com.webobjects.directtoweb.D2W;
 import com.webobjects.foundation.NSLog;
 
 import er.directtoweb.ERD2WDirectAction;
-import wowodc.pssexample.components.Main;
 
 
 public class DirectAction extends ERD2WDirectAction {
@@ -27,7 +28,7 @@ public class DirectAction extends ERD2WDirectAction {
      * @return
      */
     protected boolean allowPageConfiguration(String pageConfiguration) {
-        return false;
+        return true;
     }
     
 	public WOActionResults loginAction() {
