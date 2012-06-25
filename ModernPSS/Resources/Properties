@@ -1,5 +1,8 @@
 sun.io.serialization.extendedDebugInfo=true
 
+## Demonstrate memory leaking
+#er.extensions.ERXObjectStoreCoordinatorPool.maxCoordinators=4
+
 # OGNL
 ognl.helperFunctions=true
 ognl.inlineBindings=true
