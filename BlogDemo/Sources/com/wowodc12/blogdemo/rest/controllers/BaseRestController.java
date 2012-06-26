@@ -46,5 +46,10 @@ public class BaseRestController extends ERXDefaultRouteController {
   protected ERXRestFormat defaultFormat() {
     return ERXRestFormat.json();
   }
+  
+  @Override
+  protected boolean isAutomaticHtmlRoutingEnabled() {
+    return true;
+  }
 
 }

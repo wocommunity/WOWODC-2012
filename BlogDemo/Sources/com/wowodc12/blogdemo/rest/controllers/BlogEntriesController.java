@@ -2,12 +2,9 @@ package com.wowodc12.blogdemo.rest.controllers;
 
 import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WORequest;
-import com.webobjects.eocontrol.EOQualifier;
-import com.webobjects.foundation.NSArray;
 import com.wowodc12.blogdemo.model.BlogEntry;
 
 import er.extensions.appserver.ERXHttpStatusCodes;
-import er.extensions.eof.ERXKey;
 import er.extensions.eof.ERXKeyFilter;
 import er.rest.ERXRestFetchSpecification;
 
