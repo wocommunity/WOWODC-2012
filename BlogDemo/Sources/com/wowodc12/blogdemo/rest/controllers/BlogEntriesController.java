@@ -2,10 +2,14 @@ package com.wowodc12.blogdemo.rest.controllers;
 
 import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WORequest;
+import com.webobjects.eocontrol.EOQualifier;
+import com.webobjects.foundation.NSArray;
 import com.wowodc12.blogdemo.model.BlogEntry;
 
 import er.extensions.appserver.ERXHttpStatusCodes;
+import er.extensions.eof.ERXKey;
 import er.extensions.eof.ERXKeyFilter;
+import er.rest.ERXRestFetchSpecification;
 
 public class BlogEntriesController extends BaseRestController {
 
@@ -29,7 +33,15 @@ public class BlogEntriesController extends BaseRestController {
   public WOActionResults destroyAction() throws Throwable {
     BlogEntry entry = routeObjectForKey("blogEntry");
     editingContext().deleteObject(entry);
+    editingContext().saveChanges();
     return response(ERXHttpStatusCodes.OK);
+  }
+  
+  @Override
+  public WOActionResults indexAction() throws Throwable {
+    ERXRestFetchSpecification<BlogEntry> fetchSpec = new ERXRestFetchSpecification<BlogEntry>(BlogEntry.ENTITY_NAME, null, BlogEntry.LAST_MODIFIED.descs());
+    fetchSpec.enableRequestQualifiers(null, outFilter());
+    return response(fetchSpec,outFilter());
   }
   
   public ERXKeyFilter inFilter() {
