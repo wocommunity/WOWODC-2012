@@ -1,0 +1,25 @@
+{
+    attributes = (
+        {allowsNull = N; name = id; prototypeName = id; }, 
+        {columnName = name; name = name; prototypeName = varchar50; }
+    ); 
+    attributesUsedForLocking = (id, name); 
+    className = "com.wowodc12.blogdemo.model.Category"; 
+    classProperties = (blogEntries, name); 
+    externalName = Category; 
+    fetchSpecificationDictionary = {}; 
+    name = Category; 
+    primaryKeyAttributes = (id); 
+    relationships = (
+        {definition = "categoryBlogEntries.blogEntry"; name = blogEntries; }, 
+        {
+            deleteRule = EODeleteRuleCascade; 
+            destination = CategoryBlogEntry; 
+            isToMany = Y; 
+            joinSemantic = EOInnerJoin; 
+            joins = ({destinationAttribute = categoryId; sourceAttribute = id; }); 
+            name = categoryBlogEntries; 
+            propagatesPrimaryKey = Y; 
+        }
+    ); 
+}

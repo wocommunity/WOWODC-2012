@@ -1,0 +1,17 @@
+{
+    EOModelVersion = "2.1"; 
+    adaptorName = JDBC; 
+    connectionDictionary = {}; 
+    entities = (
+        {className = "com.wowodc12.blogdemo.model.Author"; name = Author; }, 
+        {className = "com.wowodc12.blogdemo.model.BlogEntry"; name = BlogEntry; }, 
+        {className = "com.wowodc12.blogdemo.model.Category"; name = Category; }, 
+        {className = EOGenericRecord; name = CategoryBlogEntry; }
+    ); 
+    userInfo = {
+        "_EntityModeler" = {
+            activeDatabaseConfigName = Default; 
+            databaseConfigs = {Default = {adaptorName = JDBC; prototypeEntityName = EOJDBCH2Prototypes; }; }; 
+        }; 
+    }; 
+}

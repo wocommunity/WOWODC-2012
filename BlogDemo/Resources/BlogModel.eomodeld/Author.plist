@@ -1,0 +1,25 @@
+{
+    attributes = (
+        {columnName = firstName; name = firstName; prototypeName = varchar100; }, 
+        {allowsNull = N; name = id; prototypeName = id; }, 
+        {columnName = lastName; name = lastName; prototypeName = varchar100; }, 
+        {columnName = password; name = password; prototypeName = varchar50; }, 
+        {columnName = username; name = username; prototypeName = varchar16; }
+    ); 
+    attributesUsedForLocking = (firstName, id, lastName, password, username); 
+    className = "com.wowodc12.blogdemo.model.Author"; 
+    classProperties = (blogEntries, firstName, lastName, password, username); 
+    externalName = Author; 
+    fetchSpecificationDictionary = {}; 
+    name = Author; 
+    primaryKeyAttributes = (id); 
+    relationships = (
+        {
+            destination = BlogEntry; 
+            isToMany = Y; 
+            joinSemantic = EOInnerJoin; 
+            joins = ({destinationAttribute = authorID; sourceAttribute = id; }); 
+            name = blogEntries; 
+        }
+    ); 
+}
