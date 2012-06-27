@@ -20,6 +20,7 @@ public abstract class _SyncInfo extends  ERXGenericRecord {
   public static final ERXKey<String> ETAG = new ERXKey<String>("etag");
   public static final ERXKey<NSTimestamp> LAST_MODIFIED = new ERXKey<NSTimestamp>("lastModified");
   public static final ERXKey<com.wowodc12.blogdemo.enums.SyncInfoStatus> STATE = new ERXKey<com.wowodc12.blogdemo.enums.SyncInfoStatus>("state");
+  public static final ERXKey<String> TOKEN = new ERXKey<String>("token");
   // Relationship Keys
   public static final ERXKey<com.wowodc12.blogdemo.model.DelegatePKHistory> DELEGATE_PK_HISTORIES = new ERXKey<com.wowodc12.blogdemo.model.DelegatePKHistory>("delegatePKHistories");
 
@@ -28,6 +29,7 @@ public abstract class _SyncInfo extends  ERXGenericRecord {
   public static final String ETAG_KEY = ETAG.key();
   public static final String LAST_MODIFIED_KEY = LAST_MODIFIED.key();
   public static final String STATE_KEY = STATE.key();
+  public static final String TOKEN_KEY = TOKEN.key();
   // Relationships
   public static final String DELEGATE_PK_HISTORIES_KEY = DELEGATE_PK_HISTORIES.key();
 
@@ -83,6 +85,17 @@ public abstract class _SyncInfo extends  ERXGenericRecord {
     	_SyncInfo.LOG.debug( "updating state from " + state() + " to " + value);
     }
     takeStoredValueForKey(value, _SyncInfo.STATE_KEY);
+  }
+
+  public String token() {
+    return (String) storedValueForKey(_SyncInfo.TOKEN_KEY);
+  }
+
+  public void setToken(String value) {
+    if (_SyncInfo.LOG.isDebugEnabled()) {
+    	_SyncInfo.LOG.debug( "updating token from " + token() + " to " + value);
+    }
+    takeStoredValueForKey(value, _SyncInfo.TOKEN_KEY);
   }
 
   public NSArray<com.wowodc12.blogdemo.model.DelegatePKHistory> delegatePKHistories() {
@@ -180,16 +193,16 @@ public abstract class _SyncInfo extends  ERXGenericRecord {
   }
 
 
-  public static SyncInfo createSyncInfo(EOEditingContext editingContext, String delegatedPrimaryKeyValue
-, String etag
+  public static SyncInfo createSyncInfo(EOEditingContext editingContext, String etag
 , NSTimestamp lastModified
 , com.wowodc12.blogdemo.enums.SyncInfoStatus state
+, String token
 ) {
     SyncInfo eo = (SyncInfo) EOUtilities.createAndInsertInstance(editingContext, _SyncInfo.ENTITY_NAME);    
-		eo.setDelegatedPrimaryKeyValue(delegatedPrimaryKeyValue);
 		eo.setEtag(etag);
 		eo.setLastModified(lastModified);
 		eo.setState(state);
+		eo.setToken(token);
     return eo;
   }
 

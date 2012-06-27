@@ -1,6 +1,7 @@
 {
     attributes = (
         {
+            allowsNull = Y; 
             columnName = delegatedPrimaryKeyValue; 
             name = delegatedPrimaryKeyValue; 
             prototypeName = varchar255; 
@@ -13,11 +14,19 @@
             name = state; 
             prototypeName = javaEnum; 
             valueClassName = "com.wowodc12.blogdemo.enums.SyncInfoStatus"; 
-        }
+        }, 
+        {columnName = token; name = token; prototypeName = varchar255; }
     ); 
-    attributesUsedForLocking = (delegatedPrimaryKeyValue, etag, id, state); 
+    attributesUsedForLocking = (delegatedPrimaryKeyValue, etag, id, state, token); 
     className = "com.wowodc12.blogdemo.model.SyncInfo"; 
-    classProperties = (delegatedPrimaryKeyValue, delegatePKHistories, etag, lastModified, state); 
+    classProperties = (
+        delegatedPrimaryKeyValue, 
+        delegatePKHistories, 
+        etag, 
+        lastModified, 
+        state, 
+        token
+    ); 
     externalName = SyncInfo; 
     fetchSpecificationDictionary = {}; 
     name = SyncInfo; 

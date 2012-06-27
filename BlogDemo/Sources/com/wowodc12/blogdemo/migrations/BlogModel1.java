@@ -28,11 +28,12 @@ public class BlogModel1 extends ERXMigrationDatabase.Migration {
     delegatePKHistoryTable.setPrimaryKey("id");
 
     ERXMigrationTable syncInfoTable = database.newTableNamed("SyncInfo");
-    syncInfoTable.newStringColumn("delegatedPrimaryKeyValue", 255, false);
+    syncInfoTable.newStringColumn("delegatedPrimaryKeyValue", 255, true);
     syncInfoTable.newStringColumn("etag", 255, false);
     syncInfoTable.newIntegerColumn("id", false);
     syncInfoTable.newTimestampColumn("lastModified", false);
     syncInfoTable.newStringColumn("state", 50, false);
+    syncInfoTable.newStringColumn("token", 50, false);
     syncInfoTable.create();
     syncInfoTable.setPrimaryKey("id");
 
