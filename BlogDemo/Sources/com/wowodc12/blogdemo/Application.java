@@ -3,6 +3,7 @@ package com.wowodc12.blogdemo;
 import com.wowodc12.blogdemo.model.Author;
 import com.wowodc12.blogdemo.model.BlogEntry;
 import com.wowodc12.blogdemo.model.Category;
+import com.wowodc12.blogdemo.rest.controllers.BlogEntriesController;
 import com.wowodc12.blogdemo.rest.controllers.HtmlRoutesController;
 
 import er.extensions.appserver.ERXApplication;
@@ -28,6 +29,9 @@ public class Application extends ERXApplication {
     restRequestHandler.addDefaultRoutes(BlogEntry.ENTITY_NAME);    
     restRequestHandler.addDefaultRoutes(Category.ENTITY_NAME); 
     restRequestHandler.insertRoute(new ERXRoute(BlogEntry.ENTITY_NAME, "/", null, HtmlRoutesController.class, "index"));
+    restRequestHandler.insertRoute(new ERXRoute(BlogEntry.ENTITY_NAME, "/posts/{blogEntry:BlogEntry}", ERXRoute.Method.Get, BlogEntriesController.class, "show"));
+    restRequestHandler.insertRoute(new ERXRoute(BlogEntry.ENTITY_NAME, "/posts/{blogEntry:BlogEntry}", ERXRoute.Method.Put, BlogEntriesController.class, "update"));
+    restRequestHandler.insertRoute(new ERXRoute(BlogEntry.ENTITY_NAME, "/posts/{blogEntry:BlogEntry}", ERXRoute.Method.Delete, BlogEntriesController.class, "destroy"));
     
 		ERXRouteRequestHandler.register(restRequestHandler);
 		setDefaultRequestHandler(restRequestHandler);
