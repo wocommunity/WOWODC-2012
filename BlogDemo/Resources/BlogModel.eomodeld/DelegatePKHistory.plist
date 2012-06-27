@@ -14,7 +14,7 @@
         }
     ); 
     attributesUsedForLocking = (delegatedPrimaryKeyValue, id, syncInfoID); 
-    className = "com.wowodc.dc2012.model.DelegatePKHistory"; 
+    className = "com.wowodc12.blogdemo.model.DelegatePKHistory"; 
     classProperties = (delegatedPrimaryKeyValue, syncInfo); 
     externalName = DelegatePKHistory; 
     fetchSpecificationDictionary = {}; 
