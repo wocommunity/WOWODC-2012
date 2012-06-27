@@ -6,6 +6,7 @@ import com.wowodc12.blogdemo.model.Category;
 import com.wowodc12.blogdemo.rest.controllers.HtmlRoutesController;
 
 import er.extensions.appserver.ERXApplication;
+import er.rest.ERXRestNameRegistry;
 import er.rest.routes.ERXRoute;
 import er.rest.routes.ERXRouteRequestHandler;
 
@@ -18,7 +19,9 @@ public class Application extends ERXApplication {
 		ERXApplication.log.info("Welcome to " + name() + " !");
 		/* ** put your initialization code in here ** */
 		setAllowsConcurrentRequestHandling(true);
-		
+
+		ERXRestNameRegistry.registry().setExternalNameForInternalName("Post", BlogEntry.ENTITY_NAME);
+
 		ERXRouteRequestHandler restRequestHandler = new ERXRouteRequestHandler();
     
 		restRequestHandler.addDefaultRoutes(Author.ENTITY_NAME);

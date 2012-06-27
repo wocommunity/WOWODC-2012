@@ -16,6 +16,7 @@ public class BlogEntriesController extends BaseRestController {
 
   @Override
   public WOActionResults createAction() throws Throwable {
+    checkSecurity();
     BlogEntry newEntry = create(inFilter());
     editingContext().saveChanges();
     return response(newEntry, outFilter());
@@ -43,6 +44,8 @@ public class BlogEntriesController extends BaseRestController {
   
   public ERXKeyFilter inFilter() {
     ERXKeyFilter filter = ERXKeyFilter.filterWithAttributesAndToOneRelationships();
+    filter.include(BlogEntry.CREATED_TIME);
+    filter.exclude(BlogEntry.CREATION_TIME);
     filter.include(BlogEntry.CATEGORIES);
     return filter;
   }
