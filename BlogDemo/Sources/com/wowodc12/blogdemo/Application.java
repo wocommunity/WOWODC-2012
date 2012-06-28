@@ -71,6 +71,8 @@ public class Application extends ERXApplication {
     ec.lock();
 
     try {
+
+      // ------ We got new EOs, so let's create a new SyncInfo object -----
       NSArray<Object> insertedObjects = ERXArrayUtilities.filteredArrayWithQualifierEvaluation((NSArray<Object>)userInfo.objectForKey("inserted"), new EOSyncEntityFilter() );
       for ( Object id : insertedObjects ) {
         ERXEnterpriseObject eo = eo(id, ec);
@@ -78,6 +80,7 @@ public class Application extends ERXApplication {
         syncDetail.setDelegatedPrimaryKeyValue((String)entityId(eo));
       }
       
+      // ------ We got new EOs, so let's fetch the SyncInfo object and set its state to DELETED -----
       NSArray<Object> deletedObjects = ERXArrayUtilities.filteredArrayWithQualifierEvaluation((NSArray<Object>)userInfo.objectForKey("deleted"), new EOSyncEntityFilter() );
       for ( Object id : deletedObjects ) {
         ERXEnterpriseObject eo = eo(id, ec);
@@ -91,6 +94,7 @@ public class Application extends ERXApplication {
         }
       }
       
+      // ------ Update EO. We will add a new history object, and update the syncinfo object -----
       NSArray<Object> updatedObjects = ERXArrayUtilities.filteredArrayWithQualifierEvaluation((NSArray<Object>)userInfo.objectForKey("updated"), new EOSyncEntityFilter() );
       for ( Object id : updatedObjects ) {
         ERXEnterpriseObject eo = eo(id, ec);

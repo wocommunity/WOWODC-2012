@@ -50,9 +50,12 @@ public class BlogEntriesController extends BaseRestController {
     
     SyncInfo syncInfo = SyncInfo.fetchSyncInfo(editingContext(), SyncInfo.DELEGATED_PRIMARY_KEY_VALUE.eq(uniqueTitle));
     if (syncInfo != null) {
+      // ----- If your etag value is the same as the client, that means the content is the same
       if (syncInfo.etag().equals(ifNoneMatchHeader)) {
         return response(ERXHttpStatusCodes.NOT_MODIFIED);
       }
+
+      // ----- If your last modified date is the same as the client, that means the content is the same
       if (syncInfo.etag().equals(ifModifiedSinceHeader)) {
         java.util.Date ifModifiedDate = isoDateFormatter.parse(ifModifiedSinceHeader);
         if ((ifModifiedDate.before(syncInfo.lastModified())) || (ifModifiedDate.equals(syncInfo.lastModified()))) {
