@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import com.webobjects.eocontrol.EOClassDescription;
 import com.wowodc12.blogdemo.model.BlogEntry;
-import com.wowodc12.blogdemo.model.SyncInfo;
 
 import er.extensions.eof.ERXDatabaseContextDelegate;
 import er.rest.ERXEORestDelegate;
