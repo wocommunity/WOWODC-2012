@@ -4,8 +4,10 @@ import com.webobjects.appserver.WOActionResults;
 import com.webobjects.appserver.WORequest;
 import com.webobjects.foundation.NSTimestampFormatter;
 import com.wowodc12.blogdemo.model.BlogEntry;
+import com.wowodc12.blogdemo.model.DelegatePKHistory;
 
 import er.extensions.appserver.ERXHttpStatusCodes;
+import er.extensions.eof.ERXDatabaseContextDelegate;
 import er.extensions.eof.ERXKeyFilter;
 import er.rest.ERXRestContext;
 import er.rest.ERXRestFetchSpecification;
@@ -26,7 +28,16 @@ public class BlogEntriesController extends BaseRestController {
   
   @Override
   public WOActionResults showAction() throws Throwable {
+    String uniqueTitle = routeObjectForKey("blogEntry");
+    BlogEntry entry = null;
+    return response(entry, outFilter());
+  }
+  
+  @Override
+  public WOActionResults updateAction() throws Throwable {
     BlogEntry entry = routeObjectForKey("blogEntry");
+    update(entry,inFilter());
+    editingContext().saveChanges();
     return response(entry, outFilter());
   }
   

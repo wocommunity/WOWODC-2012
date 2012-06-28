@@ -33,4 +33,8 @@ public class BlogEntry extends _BlogEntry {
   public void setCreatedTime(NSTimestamp createdTime) {
     super.setCreationTime(createdTime);
   }
+  
+  public String uniqueTitle() {
+    return this.title() + "_" + this.primaryKey();
+  }
 }
