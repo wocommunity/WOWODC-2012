@@ -1,9 +1,69 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
 <html>
 	<head>
-		<title>Untitled</title>
+		<title>Blog Entry REST Example - WOWODC 2012</title>
+		<style type="text/css">
+		  body { font-family: Verdana; }
+		  .comment { color: gray; margin-top: 1em; font-size: 0.8em; }
+		  .code    { font-family:monospace; }
+		</style>
 	</head>
 	<body>
-Hello World
+<h3>How to use curl for testing this app</h3>
+<p>
+  If you are trying to follow Pascal's presentation in 2012 while using this code, you will find that URLs early in the presentation
+  do not work because later in the presentation he makes changes to the code. Here are all the final URLs in a form which allows you to
+  test using curl on the command line rather than needing to install HTTP Client. To see header, cookie and HTTP status code information 
+  add the "-v" option to the following curl commands.
+</p>
+
+<h4 class="comment"># Create author examples (POST) AuthorsController.createAction()</h4>
+<div class="comment"># Create author using json format specified by .json suffix</div>
+<div class="code">curl -X POST -d "{firstName:'Pascal',lastName:'Robert',username:'probert',password:'wowodc12'}" <wo:ERXRouteURL entityName="Author" format="json" absolute="$true"/></div>
+<div class="comment"># Create author using json format specified by Content-Type header. Note that trailing period '.' is artifact of ERXRouteURL and you would normally omit</div>
+<div class="code">curl -X POST -d "{firstName:'Mike',lastName:'Schrag',username:'mschrag',password:'wowodc12'}" -H "Content-Type: application/json" <wo:ERXRouteURL entityName="Author" format="" absolute="$true"/></div>
+<div class="comment"># Create author using plist format</div>
+<div class="code">curl -X POST -d '{firstName="Ramsey";lastName="Gurley";username="rgurley";password="wowodc12";}' <wo:ERXRouteURL entityName="Author" format="plist" absolute="$true"/></div>
+<div class="comment"># Create author using xml format</div>
+<div class="code">curl -X POST -d "&lt;Author&gt;&lt;firstName&gt;Chuck&lt;/firstName&gt;&lt;lastName&gt;Hill&lt;/lastName&gt;&lt;username&gt;chill&lt;/username&gt;&lt;password&gt;wowodc12&lt;/password&gt;&lt;/Author&gt;" <wo:ERXRouteURL entityName="Author" format="xml" absolute="$true"/></div>
+<div class="comment"># Create author using form format</div>
+<div class="code">curl -X POST -d "firstName=Tim&lastName=Cummings&username=tcummings&password=wowodc12" <wo:ERXRouteURL entityName="Author" format="form" absolute="$true"/></div>
+<h4 class="comment"># Show author (GET) AuthorsController.showAction()</h4>
+<div class="code">curl -X GET  <wo:ERXRouteURL entityName="Author" id="3" action="show" format="json" absolute="$true"/></div>
+<h4 class="comment"># Show authors (GET) AuthorsController.indexAction()</h4>
+<div class="comment"># Sorted alphabetically by firstName descending.</div>
+<div class="code">curl -X GET <wo:ERXRouteURL entityName="Author" action="index" queryDictionary="$dictSortAuthor" format="json" absolute="$true"/></div>
+<h4 class="comment"># Login as author (GET) AuthorsController.loginAction()</h4>
+<div class="comment"># Save cookie in cookie jar for later use. Double quotes required around URL to prevent shell interpreting "&amp;". Using -v to see cookie</div>
+<div class="code">curl -v -X GET --cookie-jar /tmp/BlogEntryCookieJar.txt "<wo:ERXRouteURL entityName="Author" action="login" queryDictionary="$dictLogin" format="json" absolute="$true"/>"</div>
+<h4 class="comment"># Update author (PUT) AuthorsController.updateAction()</h4>
+<div class="code">curl -X PUT -d "{firstName:'David'}" <wo:ERXRouteURL entityName="Author" id="4" format="json" absolute="$true"/></div>
+<h4 class="comment"># Delete author (DELETE) AuthorsController.destroyAction()</h4>
+<div class="code">curl -X DELETE <wo:ERXRouteURL entityName="Author" format="" id="3" absolute="$true"/></div>
+<h4 class="comment"># Create Categories (POST) CategoriesController.createAction()</h4>
+<div class="comment"># Create category using json format. Escape characters with \ or with UTF-16. eg Single quote (') = \u0027. (Need to hide single quote from command line shell.)</div>
+<div class="code">curl -X POST -d '{name:"WOWODC 2010\u0027s \"Greatest Hits\""}' <wo:ERXRouteURL entityName="Category" format="json" absolute="$true"/></div>
+<div class="comment"># Create category using form format. Use URL encoding. eg Single quote (') = %27. (Need to hide single quote from command line shell.)</div>
+<div class="code">curl -X POST -d 'name=WOWODC+2011%27s+%22Greatest+Hits%22' <wo:ERXRouteURL entityName="Category" format="form" absolute="$true"/></div>
+<div class="comment"># Create category using xml format. Escape using entities. eg Single quote (') = &amp;apos; or &amp;#x27;. (Need to hide single quote from command line shell.)</div>
+<div class="code">curl -X POST -d '&lt;Category&gt;&lt;name&gt;WOWODC 2012&amp;apos;s &amp;quot;Greatest Hits&amp;quot;&lt;/name&gt;&lt;/Category&gt;' <wo:ERXRouteURL entityName="Category" format="xml" absolute="$true"/></div>
+<h4 class="comment"># Create Blog Entries (POST) BlogEntriesController.createAction()</h4>
+<div class="comment"># BlogEntries demonstrate the use of aliases (setExternalNameForInternalName). So use /ra/posts in URLs rather than /ra/blogEntries. /ra/blogEntries will no longer work</div>
+<div class="comment"># You need to run the login command above first to put the cookie in the cookie jar</div>
+<div class="code">curl -X POST --cookie /tmp/BlogEntryCookieJar.txt -d '{title:"W00t!",content:"First post, suckers!",author:{id:2},categories:[{id:1},{id:2}]}' <wo:ERXRouteURL entityName="BlogEntry" format="json" absolute="$true"/></div>
+<div class="code">curl -X POST --cookie /tmp/BlogEntryCookieJar.txt -d '{title:"WOWODC",content:"The best show on earth",author:{id:0},categories:[{id:1}]}' <wo:ERXRouteURL entityName="BlogEntry" format="json" absolute="$true"/></div>
+<div class="code">curl -X POST --cookie /tmp/BlogEntryCookieJar.txt -d '{title:"WWDC",content:"Never heard of it!",author:{id:1},categories:[{id:0}]}' <wo:ERXRouteURL entityName="BlogEntry" format="json" absolute="$true"/></div>
+<h4 class="comment"># Show Blog Entry (GET) BlogEntriesController.showAction()</h4>
+<div class="code">curl -X GET --cookie /tmp/BlogEntryCookieJar.txt -X GET <wo:ERXRouteURL entityName="BlogEntry" action="show" id="WOWODC_1" format="json" absolute="$true"/></div>
+<h4 class="comment"># Update Blog Entry title and then try to fetch on old title</h4>
+<div class="code">curl -X PUT --cookie /tmp/BlogEntryCookieJar.txt -d '{title:"Apple\u0027s show"}' <wo:ERXRouteURL entityName="BlogEntry" id="WWDC_2" format="json" absolute="$true"/></div>
+<div class="comment"># Try to fetch on old unique title. Using -v to see HTTP status code and new URL </div>
+<div class="code">curl -v -X GET --cookie /tmp/BlogEntryCookieJar.txt <wo:ERXRouteURL entityName="BlogEntry" id="WWDC_2" format="json" absolute="$true"/></div>
+<div class="comment"># Fetch on old unique title. Using -v to see HTTP status code. Using -L to follow redirect </div>
+<div class="code">curl -v -L -X GET --cookie /tmp/BlogEntryCookieJar.txt <wo:ERXRouteURL entityName="BlogEntry" id="WWDC_2" format="json" absolute="$true"/></div>
+<div class="comment"># Fetch on new unique title.</div>
+<div class="code">curl -X GET --cookie /tmp/BlogEntryCookieJar.txt <wo:ERXRouteURL entityName="BlogEntry" id="Apple%27s+show_2" format="json" absolute="$true"/></div>
+
+
 	</body>
 </html>
