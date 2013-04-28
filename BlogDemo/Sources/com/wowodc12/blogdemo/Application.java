@@ -40,14 +40,19 @@ public class Application extends ERXApplication {
 		/* ** put your initialization code in here ** */
 		setAllowsConcurrentRequestHandling(true);
 
-		ERXRestNameRegistry.registry().setExternalNameForInternalName("Post", BlogEntry.ENTITY_NAME);
+		//Define alias. We want to use /ra/posts rather than /ra/blogEntries
+    ERXRestNameRegistry.registry().setExternalNameForInternalName("Post", BlogEntry.ENTITY_NAME);
 
 		ERXRouteRequestHandler restRequestHandler = new ERXRouteRequestHandler();
-    
-		restRequestHandler.addDefaultRoutes(Author.ENTITY_NAME);
+  
+		restRequestHandler.addDefaultRoutes(Author.ENTITY_NAME);		 
     restRequestHandler.addDefaultRoutes(BlogEntry.ENTITY_NAME);    
     restRequestHandler.addDefaultRoutes(Category.ENTITY_NAME); 
-    restRequestHandler.insertRoute(new ERXRoute(BlogEntry.ENTITY_NAME, "/", null, HtmlRoutesController.class, "index"));
+
+    //Define default page to show when app starts. See also HtmlRoutesController.indexAction
+    restRequestHandler.insertRoute(new ERXRoute(BlogEntry.ENTITY_NAME, "/", ERXRoute.Method.Get, HtmlRoutesController.class, "index"));
+    //Add routes because BlogEntries no longer has a numeric primary key (as specified in BlogEntryRestDelegate). Note that we insertRoute rather than addRoute
+    //so that these routes precede the routes added by restRequestHandler.addDefaultRoutes(BlogEntry.ENTITY_NAME) above.
     restRequestHandler.insertRoute(new ERXRoute(BlogEntry.ENTITY_NAME, "/posts/{uniqueTitle:String}", ERXRoute.Method.Get, BlogEntriesController.class, "show"));
     restRequestHandler.insertRoute(new ERXRoute(BlogEntry.ENTITY_NAME, "/posts/{uniqueTitle:String}", ERXRoute.Method.Put, BlogEntriesController.class, "update"));
     restRequestHandler.insertRoute(new ERXRoute(BlogEntry.ENTITY_NAME, "/posts/{uniqueTitle:String}", ERXRoute.Method.Delete, BlogEntriesController.class, "destroy"));
@@ -56,7 +61,7 @@ public class Application extends ERXApplication {
 		setDefaultRequestHandler(restRequestHandler);
 
 	}
-	
+
   @Override
   public void didFinishLaunching() {
     super.didFinishLaunching();
@@ -80,7 +85,7 @@ public class Application extends ERXApplication {
         syncDetail.setDelegatedPrimaryKeyValue((String)entityId(eo));
       }
       
-      // ------ We got new EOs, so let's fetch the SyncInfo object and set its state to DELETED -----
+      // ------ We got deleted EOs, so let's fetch the SyncInfo object and set its state to DELETED -----
       NSArray<Object> deletedObjects = ERXArrayUtilities.filteredArrayWithQualifierEvaluation((NSArray<Object>)userInfo.objectForKey("deleted"), new EOSyncEntityFilter() );
       for ( Object id : deletedObjects ) {
         ERXEnterpriseObject eo = eo(id, ec);
